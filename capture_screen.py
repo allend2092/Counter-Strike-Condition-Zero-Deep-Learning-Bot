@@ -7,6 +7,37 @@ from PIL import ImageGrab, Image
 import pytesseract
 import threading
 import queue
+import easyocr
+
+# Create an EasyOCR Reader instance
+reader = easyocr.Reader(['en'], gpu=True)  # Set gpu=False if you don't want to use GPU
+
+def read_text_from_region_esy(image, region, debug=False):
+    """
+    Reads text from a specified region in the image using EasyOCR.
+
+    Args:
+        image (PIL.Image): The image to read from.
+        region (tuple): The region (left, upper, right, lower) to extract text from.
+        debug (bool): If True, show the cropped image for debugging.
+
+    Returns:
+        str: The text read from the region.
+    """
+    # Crop the image to the specified region
+    cropped_image = image.crop(region)
+
+    # If debug is True, show the cropped image
+    if debug:
+        cropped_image.show()
+
+    # Use EasyOCR to do OCR on the cropped image
+    results = reader.readtext(np.array(cropped_image))
+
+    # Extracting text from the results
+    text = ' '.join([result[1] for result in results])
+
+    return text
 
 # Flag to control the OCR thread's execution
 ocr_thread_running = True
@@ -18,7 +49,7 @@ def ocr_thread_function(image_queue):
             image, region = image_queue.get(timeout=1)  # Timeout to allow checking the flag
 
             # Perform OCR
-            text = read_text_from_region(image, region)
+            text = read_text_from_region_esy(image, region)
 
             # Process the text or print it
             print(text)
@@ -138,7 +169,7 @@ def main():
                 cv.rectangle(screenshot, (ocr_region[0], ocr_region[1]), (ocr_region[2], ocr_region[3]), (0, 0, 255), 2)
 
                 # Display the screenshot in a window named 'Half-Life'
-                cv.imshow('Half-Life', screenshot)
+                cv.imshow('captured screen region', screenshot)
 
                 # this was the previous implementation of reading text from the screen.
                 # It slowed down the game loop too much
