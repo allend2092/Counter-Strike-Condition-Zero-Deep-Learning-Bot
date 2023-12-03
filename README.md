@@ -27,7 +27,7 @@ This project is currently in the experimental stage. It serves as a proof of con
 ## How to Use
 1. Clone the repository to your local machine.
 2. Ensure all dependencies are installed, including Python, OpenCV, and EasyOCR.
-3. Run the script and observe the bot in action.
+3. Run the script and observe.
 
 ## Future Work
 - Enhance OCR accuracy and processing speed.
