@@ -61,7 +61,7 @@ def main():
     try:
         while True:
             # Capture the screen: I've found these coodinates to be best for Half-Life at 800x600
-            screenshot = capture_screen(region=(1120, 20, 1920, 600))
+            screenshot = capture_screen(region=(1120, 20, 1920, 620))
 
             # If the screenshot is successfully captured
             if screenshot is not None:
