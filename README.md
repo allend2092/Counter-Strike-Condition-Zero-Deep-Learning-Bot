@@ -1,5 +1,4 @@
-# Counter-Strike: Condition Zero Deep Learning Bot attempt
-# Screen Reading Bot Project
+#  **Screen Reading Bot Project / Counter-Strike: Condition Zero Deep Learning Bot attempt**
 
 ## Overview
 This project is an experimental endeavor to create a bot that can read and interpret information from a video game screen in real-time. The primary goal is to explore the capabilities of OCR (Optical Character Recognition) in a dynamic gaming environment and to develop a bot that can make decisions based on the screen data it reads.
