@@ -5,26 +5,26 @@ from time import time
 import pyautogui
 from PIL import ImageGrab
 
-def capture_screen():
+def capture_screen(region=None):
     """
-    Captures the entire screen.
+    Captures a specific area of the screen.
+
+    Args:
+        region (tuple, optional): The region to capture (left, top, right, bottom).
+                                  Captures the full screen if None. Defaults to None.
 
     Returns:
         np.ndarray: The captured screen image in BGR format.
     """
     try:
-        # Capture the screen using ImageGrab from PIL
-        screenshot = ImageGrab.grab()
+        # Capture a specific region of the screen, or the full screen if region is None
+        screenshot = ImageGrab.grab(bbox=region)
 
-        # Convert the screenshot to a NumPy array
-        # This is necessary for OpenCV to process the image
+        # Convert the screenshot to a NumPy array and then to BGR format
         screenshot = np.array(screenshot)
-
-        # Convert the color format from RGB (used by PIL) to BGR (used by OpenCV)
         return cv.cvtColor(screenshot, cv.COLOR_RGB2BGR)
 
     except Exception as e:
-        # Print any error that occurs during the screen capture process
         print(f"Error capturing screen: {e}")
         return None
 
@@ -60,8 +60,8 @@ def main():
 
     try:
         while True:
-            # Capture the screen
-            screenshot = capture_screen()
+            # Capture the screen: I've found these coodinates to be best for Half-Life at 800x600
+            screenshot = capture_screen(region=(1120, 20, 1920, 600))
 
             # If the screenshot is successfully captured
             if screenshot is not None:
